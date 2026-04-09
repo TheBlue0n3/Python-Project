@@ -45,7 +45,7 @@ class Customer:
 
 
 class CustomerManager:
-    """manages all customers"""
+    """pretty self exaplanatory,manages all customers"""
 
     def __init__(self):
         self.customers = []
