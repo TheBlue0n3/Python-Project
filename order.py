@@ -4,23 +4,23 @@ from datetime import datetime
 
 
 class OrderItem:
-    """Siparişin içindeki tek bir ürün kalemini temsil eder."""
+    """represents a single product line within an order"""
 
     def __init__(self, item, qty):
         self.item = item
         self.qty = qty
 
     def get_total(self):
-        """Bu kalemin toplam fiyatını hesaplar."""
+        """calculates the total price of this line"""
         return self.item.price * self.qty
 
     def __str__(self):
-        """Kalemi yazı olarak döndürür."""
+        """returns the line as a string"""
         return f"{self.item.name} x{self.qty} = {self.get_total():.2f}€"
 
 
 class Order:
-    """Bir siparişi temsil eder."""
+    """represents an order"""
 
     def __init__(self, id, customer):
         self.id = id
@@ -30,7 +30,7 @@ class Order:
         self.done = False
 
     def add_item(self, item, qty=1):
-        """Siparişe ürün ekler. Ürün mevcut değilse veya adet geçersizse eklemez."""
+        """adds an item to the order. Doesnt add if the item is unavailable"""
         if not item.available:
             print(f"{item.name} is not available right now.")
             return False
@@ -49,7 +49,7 @@ class Order:
         return True
 
     def remove_item(self, item_id):
-        """Siparişten ürün çıkarır."""
+        """removes an item from the order"""
         for i in range(len(self.lines)):
             if self.lines[i].item.id == item_id:
                 removed = self.lines.pop(i)
@@ -59,14 +59,14 @@ class Order:
         return False
 
     def get_total(self):
-        """Siparişin toplam tutarını hesaplar."""
+        """calculates the total amount of the order"""
         total = 0.0
         for line in self.lines:
             total += line.get_total()
         return total
 
     def show(self):
-        """Sipariş detaylarını ekrana yazdırır."""
+        """prints the order details to the screen"""
         print(f"\nOrder #{self.id}")
         print(f"  Customer: {self.customer.name}")
         print(f"  Date: {self.date.strftime('%d/%m/%Y %H:%M')}")
@@ -80,7 +80,7 @@ class Order:
         print(f"  Total: {self.get_total():.2f}€")
 
     def complete(self):
-        """Siparişi tamamlandı olarak işaretler ve müşteri harcamasını günceller."""
+        """marks the order as completed and updates the customer's spending."""
         if len(self.lines) == 0:
             print("Order is empty, cannot complete.")
             return False
@@ -91,14 +91,14 @@ class Order:
 
 
 class OrderManager:
-    """Tüm siparişleri yönetir."""
+    """manages all orders."""
 
     def __init__(self):
         self.orders = []
         self.next_id = 1
 
     def create(self, customer):
-        """Yeni sipariş oluşturur."""
+        """creates a new order."""
         o = Order(self.next_id, customer)
         self.orders.append(o)
         self.next_id += 1
@@ -106,14 +106,14 @@ class OrderManager:
         return o
 
     def find(self, id):
-        """ID'ye göre sipariş arar, bulamazsa None döner."""
+        """searches for an order by ID, returns None if not found."""
         for o in self.orders:
             if o.id == id:
                 return o
         return None
 
     def show_active(self):
-        """Tamamlanmamış siparişleri listeler."""
+        """lists unfinished orders."""
         active = []
         for o in self.orders:
             if not o.done:
@@ -127,7 +127,7 @@ class OrderManager:
                 print(f"  [{o.id}] {o.customer.name} - {o.get_total():.2f}€")
 
     def daily_report(self):
-        """Günlük sipariş özetini ekrana yazdırır."""
+        """prints the daily order summary to the screen."""
         done_orders = []
         for o in self.orders:
             if o.done:
@@ -143,7 +143,7 @@ class OrderManager:
         print(f"  Revenue: {total_revenue:.2f}€")
 
     def save_csv(self, path="data/orders.csv"):
-        """Siparişleri CSV dosyasına kaydeder."""
+        """saves orders to a CSV file."""
         try:
             os.makedirs("data", exist_ok=True)
             with open(path, "w", newline="", encoding="utf-8") as f:

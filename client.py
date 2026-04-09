@@ -3,7 +3,7 @@ import os
 
 
 class Customer:
-    """Bir müşteriyi temsil eder."""
+    """represents a customer"""
 
     def __init__(self, id, name, phone):
         self.id = id
@@ -13,7 +13,7 @@ class Customer:
         self.order_count = 0
 
     def add_spending(self, amount):
-        """Müşterinin toplam harcamasına yeni miktar ekler."""
+        """adds a new amount to the customer's total spending"""
         if amount < 0:
             print("Amount cannot be negative.")
             return
@@ -21,7 +21,7 @@ class Customer:
         self.order_count += 1
 
     def show(self):
-        """Müşteri bilgilerini ekrana yazdırır."""
+        """prints customer info to the screen"""
         print(f"\n  ID     : {self.id}")
         print(f"  Name   : {self.name}")
         print(f"  Phone  : {self.phone}")
@@ -29,30 +29,30 @@ class Customer:
         print(f"  Spent  : {self.total_spent:.2f}€")
 
     def update_phone(self, new_phone):
-        """Müşterinin telefon numarasını günceller."""
+        """updates the customer's phone number"""
         self.phone = new_phone
         print(f"{self.name} phone updated.")
 
     def is_vip(self):
-        """Müşterinin VIP olup olmadığını kontrol eder (500€ üzeri harcama)."""
+        """checks if the customer is vip (spent over 500€)"""
         if self.total_spent >= 500:
             return True
         return False
 
     def __str__(self):
-        """Müşteriyi yazı olarak döndürür."""
+        """returns the customer as text"""
         return f"{self.name} (ID: {self.id})"
 
 
 class CustomerManager:
-    """Tüm müşterileri yönetir."""
+    """manages all customers"""
 
     def __init__(self):
         self.customers = []
         self.next_id = 1
 
     def add(self, name, phone):
-        """Yeni müşteri ekler ve oluşturulan müşteriyi döndürür."""
+        """adds a new customer and returns it"""
         c = Customer(self.next_id, name, phone)
         self.customers.append(c)
         self.next_id += 1
@@ -60,14 +60,14 @@ class CustomerManager:
         return c
 
     def find(self, id):
-        """ID'ye göre müşteri arar, bulamazsa None döner."""
+        """searches for a customer by id returns none if not found"""
         for c in self.customers:
             if c.id == id:
                 return c
         return None
 
     def show_all(self):
-        """Tüm müşterileri listeler."""
+        """lists all customers"""
         if len(self.customers) == 0:
             print("No customers yet.")
             return
@@ -78,7 +78,7 @@ class CustomerManager:
             print(f"  [{c.id}] {c.name} - {c.phone}{vip}")
 
     def show_vip(self):
-        """Sadece VIP müşterileri listeler."""
+        """lists only vip customers"""
         vip_list = []
         for c in self.customers:
             if c.is_vip():
@@ -92,7 +92,7 @@ class CustomerManager:
                 print(f"  {c.name} - {c.total_spent:.2f}€")
 
     def save_csv(self, path="data/customers.csv"):
-        """Müşteri verilerini CSV dosyasına kaydeder."""
+        """saves customer data to a csv file"""
         try:
             os.makedirs("data", exist_ok=True)
             with open(path, "w", newline="", encoding="utf-8") as f:
@@ -105,7 +105,7 @@ class CustomerManager:
             print(f"Error: {e}")
 
     def load_csv(self, path="data/customers.csv"):
-        """Müşteri verilerini CSV dosyasından yükler."""
+        """loads customer data from a csv file"""
         try:
             with open(path, "r", encoding="utf-8") as f:
                 r = csv.DictReader(f)

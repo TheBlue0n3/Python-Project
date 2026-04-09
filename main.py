@@ -4,13 +4,13 @@ from order import OrderManager
 
 
 def load_data(menu, cm):
-    """Kaydedilmiş verileri dosyalardan yükler."""
+    """loads saved data from files"""
     menu.load_csv()
     cm.load_csv()
 
 
 def setup_sample_menu(menu):
-    """Eğer menü boşsa örnek ürünler ekler."""
+    """adds sample items if the menu is empty"""
     menu.add("Espresso", 35.0, "Coffee")
     menu.add("Cappuccino", 45.0, "Coffee")
     menu.add("Latte", 50.0, "Coffee")
@@ -24,7 +24,7 @@ def setup_sample_menu(menu):
 
 
 def menu_management(menu):
-    """Menü yönetim ekranını çalıştırır."""
+    """runs the menu management screen"""
     while True:
         print("\n--- MENU MANAGEMENT ---")
         print("1. Show all menu items")
@@ -89,7 +89,7 @@ def menu_management(menu):
 
 
 def customer_management(cm):
-    """Müşteri yönetim ekranını çalıştırır."""
+    """runs the customer management screen"""
     while True:
         print("\n--- CUSTOMER MANAGEMENT ---")
         print("1. List all customers")
@@ -134,7 +134,7 @@ def customer_management(cm):
 
 
 def order_management(menu, cm, om):
-    """Sipariş yönetim ekranını çalıştırır."""
+    """runs the order management screen"""
     while True:
         print("\n--- ORDER MANAGEMENT ---")
         print("1. New order")
@@ -213,8 +213,8 @@ def order_management(menu, cm, om):
 
 
 def main():
-    """Programın ana giriş noktası. Menüyü başlatır."""
-    print("Welcome to Yildiz Cafe Management System")
+    """main entry point of the program starts the menu"""
+    print("Welcome to Star Cafe Management System")
 
     menu = Menu()
     cm = CustomerManager()

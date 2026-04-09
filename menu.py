@@ -3,7 +3,7 @@ import os
 
 
 class MenuItem:
-    """Menüdeki bir ürünü temsil eder."""
+    """represents a product in the menu"""
 
     def __init__(self, id, name, price, category):
         self.id = id
@@ -13,7 +13,7 @@ class MenuItem:
         self.available = True
 
     def update_price(self, new_price):
-        """Ürünün fiyatını günceller."""
+        """updates the price of the item"""
         if new_price < 0:
             print("Price cannot be negative.")
             return False
@@ -22,7 +22,7 @@ class MenuItem:
         return True
 
     def toggle_available(self):
-        """Ürünün mevcut/mevcut değil durumunu değiştirir."""
+        """toggles whether the item is available or not"""
         self.available = not self.available
         if self.available:
             print(f"{self.name} is now available.")
@@ -30,24 +30,24 @@ class MenuItem:
             print(f"{self.name} is now unavailable.")
 
     def show(self):
-        """Ürün bilgilerini ekranda gösterir."""
+        """shows item info on the screen"""
         status = "yes" if self.available else "no"
         print(f"  [{self.id}] {self.name} - {self.price:.2f}€ - available: {status}")
 
     def __str__(self):
-        """Ürünü yazı olarak döndürür."""
+        """returns the item as text"""
         return f"{self.name} ({self.price:.2f}€)"
 
 
 class Menu:
-    """Cafe menüsünü yönetir."""
+    """manages the cafe menu"""
 
     def __init__(self):
         self.items = []
         self.next_id = 1
 
     def add(self, name, price, category):
-        """Menüye yeni ürün ekler."""
+        """adds a new item to the menu"""
         x = MenuItem(self.next_id, name, price, category)
         self.items.append(x)
         self.next_id += 1
@@ -55,14 +55,14 @@ class Menu:
         return x
 
     def find(self, id):
-        """Verilen ID'ye sahip ürünü döndürür, yoksa None döner."""
+        """returns the item with the given id or none if not found"""
         for i in self.items:
             if i.id == id:
                 return i
         return None
 
     def show_all(self):
-        """Tüm menüyü kategorilere göre ekrana yazdırır."""
+        """prints the whole menu grouped by categories"""
         if len(self.items) == 0:
             print("Menu is empty.")
             return
@@ -81,7 +81,7 @@ class Menu:
                     i.show()
 
     def save_csv(self, path="data/menu.csv"):
-        """Menüyü CSV dosyasına kaydeder."""
+        """saves the menu to a csv file"""
         try:
             os.makedirs("data", exist_ok=True)
             with open(path, "w", newline="", encoding="utf-8") as f:
@@ -94,7 +94,7 @@ class Menu:
             print(f"Error: {e}")
 
     def load_csv(self, path="data/menu.csv"):
-        """Menüyü CSV dosyasından yükler."""
+        """loads the menu from a csv file"""
         try:
             with open(path, "r", encoding="utf-8") as f:
                 r = csv.DictReader(f)
